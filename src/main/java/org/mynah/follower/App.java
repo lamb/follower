@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -39,7 +40,7 @@ public class App {
                 String[] followerIndexs = combine.split(CombineUtil.SPLIT);
                 String combineSkill = SkillUtil.count(followerIndexs, followers);
                 if (skill.equals(combineSkill)) {
-                    logger.info("{}, {}, {}", mission.getId(), mission.getName(), combineSkill);
+                    logger.info("{}, {}, {}", mission.getId(), mission.getName(), app.printFollower(followerIndexs, followers));
                 }
             }
         }
@@ -82,6 +83,7 @@ public class App {
             follower.setName(row.getCell(0).getStringCellValue());
             this.addSkill(row.getCell(6), follower);
             this.addSkill(row.getCell(7), follower);
+            Collections.sort(follower.getSkills());
             logger.info(follower.toString());
             followers.add(follower);
         }
@@ -100,5 +102,18 @@ public class App {
                 }
             }
         }
+    }
+
+    public String printFollower(String[] followerIndexs, List<Follower> followers) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < followerIndexs.length; i++) {
+            int index = Integer.parseInt(followerIndexs[i]);
+            Follower follower = followers.get(index - 1);
+            sb.append(follower.getName());
+            if (i < followerIndexs.length - 1) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 }

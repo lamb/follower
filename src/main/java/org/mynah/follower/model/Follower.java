@@ -35,7 +35,7 @@ public class Follower {
 
     @Override
     public String toString() {
-        return "Follower [id=" + id + ", name=" + name + ", skills=" + skills + "]";
+        return "Follower [id=" + id + ", skills=" + skills + ", name=" + name + "]";
     }
 
 }
